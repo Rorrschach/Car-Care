@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const app = express();
-const port = 3000;
+const port = 3001;
 
 app.use(express.json());
 app.use(bodyParser.json());
@@ -10,8 +10,8 @@ var cors = require("cors");
 
 app.use(
   cors({
-    origin: "http://localhost:3001",
-    methods: ["GET", "POST"],
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST", "DELETE", "PUT"],
     allowedHeaders: ["Content-Type"],
   })
 );
