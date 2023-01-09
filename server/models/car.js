@@ -1,13 +1,13 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var carSchema = new Schema(
-    {
-        car: {type: String, required: true},
-        mileage: {type: Number, required: true},
-        oilChange: {type: Array, required: true},
-        tireChange: {type: Array, required: true},
-        filterChange: {type: Array, required: true},
-    }
-);
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+const carSchema = new Schema({
+  car: { type: String, required: true },
+  mileage: { type: Number, required: true },
+  oilChange: { type: Array },
+  tireChange: { type: Array },
+  filterChange: { type: Array },
+  lastRefuel: { type: Array },
+  imageUrl: { type: String },
+});
 
-module.exports = mongoose.model('Car', carSchema);
+module.exports = mongoose.model("Car", carSchema);
