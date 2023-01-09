@@ -5,6 +5,7 @@ import { Container } from "@mui/material";
 import LogIn from "./pages/LogIn";
 import SignUp from "./pages/SignUp";
 import HomePage from "./pages/HomePage";
+import AddCar from "./components/AddCar";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LogIn />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/add" element={<AddCar />} />
           </Routes>
         </Container>
       </Router>
