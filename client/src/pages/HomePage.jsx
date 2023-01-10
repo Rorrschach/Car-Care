@@ -16,7 +16,8 @@ function HomePage() {
     })
       .then((response) => response.json())
       .then((data) => {
-        setCars(data);
+        setCars(data.cars);
+        // console.log("Success:", data.cars[0]);
       });
   }
   useEffect(() => {

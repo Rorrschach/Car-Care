@@ -6,14 +6,14 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
-export default function CarCard() {
+export default function CarCard(props) {
+  const car = props.car;
+  let path = car.carImg.slice(8);
+  const img = `http://localhost:3001/${path}`;
+
   return (
     <Card sx={{ maxWidth: 345 }}>
-      <CardMedia
-        sx={{ height: 140 }}
-        image="/static/images/cards/contemplative-reptile.jpg"
-        title="green iguana"
-      />
+      <CardMedia sx={{ height: 140 }} image={img} title="green iguana" />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           Lizard
