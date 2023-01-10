@@ -6,6 +6,7 @@ import LogIn from "./pages/LogIn";
 import SignUp from "./pages/SignUp";
 import HomePage from "./pages/HomePage";
 import AddCar from "./pages/AddCar";
+import MyCars from "./pages/MyCars";
 
 function App() {
   return (
@@ -16,7 +17,8 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LogIn />} />
             <Route path="/signup" element={<SignUp />} />
-            <Route path="/add" element={<AddCar />} />
+            <Route path="/addCar" element={<AddCar />} />
+            <Route path="/myCars" element={<MyCars />} />
           </Routes>
         </Container>
       </Router>

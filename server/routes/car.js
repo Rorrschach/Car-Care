@@ -28,29 +28,18 @@ router.get("/", async (req, res, next) => {
 });
 router.post("/", upload.single("carImg"), async (req, res, next) => {
   let x = JSON.parse(req.body.car);
-
-  // Extract properties from the form-data
-  const make = x.make;
-  const model = x.model;
-  const year = x.year;
-  const mileage = x.mileage;
-  const oilChange = x.oilChange;
-  const tireChange = x.tireChange;
-  const filterChange = x.filterChange;
-  const lastRefuel = x.lastRefuel;
-
   // create new car object
   const car = new Car({
     _id: new mongoose.Types.ObjectId(),
-    make: make,
-    model: model,
-    year: year,
-    mileage: mileage,
-    oilChange: oilChange,
-    tireChange: tireChange,
-    filterChange: filterChange,
-    lastRefuel: lastRefuel,
-    carImg: req.file.path,
+    make: x.make,
+    model: x.model,
+    year: x.year,
+    mileage: x.mileage,
+    oilChange: x.oilChange,
+    tireChange: x.tireChange,
+    filterChange: x.filterChange,
+    lastRefuel: x.lastRefuel,
+    carImg: req.file ? req.file.path : x.carImg,
     creator: req.user.id,
   });
 
@@ -75,46 +64,11 @@ router.get("/:id", async (req, res, next) => {
   });
 });
 
-router.put("/:id", async (req, res, next) => {
-  // Extract id from req.params
-  const { id } = req.params;
-  // Extract updates from req.body
-  const {
-    make,
-    model,
-    year,
-    mileage,
-    oilChange,
-    tireChange,
-    filterChange,
-    lastRefuel,
-    carImg,
-  } = req.body;
-  //validate data
-  if (!validator.isNumeric(year)) {
-    return res.status(400).send("Invalid year format");
-  }
-  if (!validator.isNumeric(mileage)) {
-    return res.status(400).send("Invalid mileage format");
-  }
-  // find the car by id and update it
-  const car = await Car.findById(id);
-  car.make = make;
-  car.model = model;
-  car.year = year;
-  car.mileage = mileage;
-  car.oilChange = oilChange;
-  car.tireChange = tireChange;
-  car.filterChange = filterChange;
-  car.lastRefuel = lastRefuel;
-  car.carImg = carImg;
-  //save the car
-  await car.save();
-  res.status(200).json({
-    message: "Car updated successfully",
-    car: car,
-  });
-});
+// router.put("/:id", async (req, res, next) => {
+//   const id = req.params.id;
+//   // Extract properties from the form-data
+//   console.log("req.body", req.body);
+// });
 
 router.delete("/:id", async (req, res, next) => {
   // Extract id from req.params

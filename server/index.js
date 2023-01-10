@@ -8,14 +8,15 @@ const port = 3001;
 app.use(express.json());
 app.use(bodyParser.json());
 
-app.use(express.static('uploads'))
+app.use(express.static("uploads"));
 
 const cors = require("cors");
 app.use(
   cors({
     origin: "http://localhost:3000",
     methods: ["GET", "POST", "DELETE", "PUT"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    //allow all headers
+    allowedHeaders: "*",
   })
 );
 

@@ -11,6 +11,10 @@ export default function CarCard(props) {
   let path = car.carImg.slice(8);
   const img = `http://localhost:3001/${path}`;
 
+  let oilChangeDue = car.oilChange[0].mileage * 1 + 5000;
+  let tireChangeDue = car.tireChange[0].mileage * 1 + 30000;
+  let filterChangeDue = car.filterChange[0].mileage * 1 + 4000;
+
   function handleEdit() {
     props.handleEdit(car);
   }
@@ -27,13 +31,16 @@ export default function CarCard(props) {
           {car.make} {car.model}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          {car.year}
-
-          {car.mileage}
-
-          {car.oilChange.mileage}
-
-          {car.oilChange.date}
+          Current Mileage: {car.mileage}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Oil Change due at: {oilChangeDue}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Tire Change due at: {tireChangeDue}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Filter Change due at: {filterChangeDue}
         </Typography>
       </CardContent>
       <CardActions>

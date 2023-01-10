@@ -7,10 +7,14 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import InputAdornment from "@mui/material/InputAdornment";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useNavigate } from "react-router";
-import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 
 export default function AddCar(props) {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // console.log(location.state);
+
   const [car, setCar] = useState({
     make: "",
     model: "",
@@ -35,11 +39,34 @@ export default function AddCar(props) {
     carImg: "",
   });
 
-  const carData = useSelector((state) => state.carData);
+  const carData = location.state;
 
   useEffect(() => {
     if (carData) {
-      setCar(carData);
+      setCar({
+        make: carData.make,
+        model: carData.model,
+        year: carData.year,
+        mileage: carData.mileage,
+        oilChange: {
+          mileage: carData.oilChange[0].mileage,
+          date: carData.oilChange[0].date,
+        },
+        filterChange: {
+          mileage: carData.filterChange[0].mileage,
+          date: carData.filterChange[0].date,
+        },
+        tireChange: {
+          mileage: carData.tireChange[0].mileage,
+          date: carData.tireChange[0].date,
+        },
+
+        lastRefuel: {
+          mileage: carData.lastRefuel[0].mileage,
+          amount: carData.lastRefuel[0].amount,
+        },
+        carImg: carData.carImg,
+      });
     }
   }, [carData]);
 
@@ -48,18 +75,10 @@ export default function AddCar(props) {
   };
 
   const data = new FormData();
-  data.append("carImg", car.carImg); // where image is the file object you want to upload.
+  if (car.carImg) data.append("carImg", car.carImg); // where image is the file object you want to upload.
   data.append("car", JSON.stringify(car)); // where car is the json object with the car information
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    if (!car.make || !car.model || !car.year || !car.mileage) {
-      alert("Please fill all required fields!");
-      return;
-    }
-
-    console.log(car);
-
+  function addNewCar() {
     fetch("http://localhost:3001/api/cars", {
       method: "POST",
       headers: headers,
@@ -70,6 +89,25 @@ export default function AddCar(props) {
         console.log("Success:", data);
         navigate("/");
       });
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (carData) {
+      fetch(`http://localhost:3001/api/cars/${carData._id}`, {
+        method: "DELETE",
+        headers: headers,
+      });
+      addNewCar();
+      return;
+    }
+    if (!car.make || !car.model || !car.year || !car.mileage || !car.carImg) {
+      alert("Please fill all required fields!");
+      return;
+    }
+    addNewCar();
+
+    console.log(car);
   }
 
   return (
