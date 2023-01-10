@@ -1,3 +1,4 @@
+const path = require("path");
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
@@ -6,13 +7,15 @@ const port = 3001;
 
 app.use(express.json());
 app.use(bodyParser.json());
-var cors = require("cors");
 
+app.use(express.static('uploads'))
+
+const cors = require("cors");
 app.use(
   cors({
     origin: "http://localhost:3000",
     methods: ["GET", "POST", "DELETE", "PUT"],
-    allowedHeaders: ["Content-Type"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
@@ -21,7 +24,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // import routes
 const userRoutes = require("./routes/user");
-const postRoutes = require("./routes/car");
+const carRoutes = require("./routes/car");
 
 // routes middleware
 app.all("*", (req, res, next) => {
@@ -37,9 +40,7 @@ app.set("view engine", "ejs");
 
 // use routes
 app.use("/api/users", userRoutes);
-app.use("/api/posts", postRoutes);
-
-// app.use('/', viewsRoutes)
+app.use("/api/cars", carRoutes);
 
 app.all("*", (req, res) => {
   res.send("Looks like your are lost!");

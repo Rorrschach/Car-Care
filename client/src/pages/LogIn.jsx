@@ -26,7 +26,7 @@ export default function LogIn() {
       password: data.get("password"),
     };
 
-    fetch("http://localhost:3000/api/users/login", {
+    fetch("http://localhost:3001/api/users/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -109,7 +109,7 @@ export default function LogIn() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/signup" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

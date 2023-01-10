@@ -24,7 +24,7 @@ export default function SignUp() {
     };
 
     //make api call
-    fetch("http://localhost:3000/api/users/signup", {
+    fetch("http://localhost:3001/api/users/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -34,6 +34,7 @@ export default function SignUp() {
       .then((response) => response.json())
       .then((data) => {
         console.log("Success:", data);
+        window.location.replace("/login");
       })
       .catch((error) => {
         console.error("Error:", error);
