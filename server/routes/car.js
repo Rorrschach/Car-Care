@@ -34,10 +34,10 @@ router.post("/", upload.single("carImg"), async (req, res, next) => {
   const model = x.model;
   const year = x.year;
   const mileage = x.mileage;
-  const oilChange = req.body.oilChange;
-  const tireChange = req.body.tireChange;
-  const filterChange = req.body.filterChange;
-  const lastRefuel = req.body.lastRefuel;
+  const oilChange = x.oilChange;
+  const tireChange = x.tireChange;
+  const filterChange = x.filterChange;
+  const lastRefuel = x.lastRefuel;
 
   // create new car object
   const car = new Car({

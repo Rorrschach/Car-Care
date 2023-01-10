@@ -1,13 +1,16 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import InputAdornment from "@mui/material/InputAdornment";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { useNavigate } from "react-router";
+import { useSelector } from "react-redux";
 
-export default function AddCar() {
+export default function AddCar(props) {
+  const navigate = useNavigate();
   const [car, setCar] = useState({
     make: "",
     model: "",
@@ -31,6 +34,15 @@ export default function AddCar() {
     },
     carImg: "",
   });
+
+  const carData = useSelector((state) => state.carData);
+
+  useEffect(() => {
+    if (carData) {
+      setCar(carData);
+    }
+  }, [carData]);
+
   const headers = {
     Authorization: `Bearer ${localStorage.getItem("token")}`,
   };
@@ -46,6 +58,8 @@ export default function AddCar() {
       return;
     }
 
+    console.log(car);
+
     fetch("http://localhost:3001/api/cars", {
       method: "POST",
       headers: headers,
@@ -54,6 +68,7 @@ export default function AddCar() {
       .then((response) => response.json())
       .then((data) => {
         console.log("Success:", data);
+        navigate("/");
       });
   }
 
@@ -74,16 +89,14 @@ export default function AddCar() {
             <TextField
               required
               id="outlined-required"
-              label="Required"
-              defaultValue="Make"
+              label="Make"
               value={car.make}
               onChange={(e) => setCar({ ...car, make: e.target.value })}
             />
             <TextField
               required
               id="outlined-required"
-              label="Required"
-              defaultValue="Model"
+              label="Model"
               value={car.model}
               onChange={(e) => setCar({ ...car, model: e.target.value })}
             />
@@ -126,11 +139,14 @@ export default function AddCar() {
           <div>
             <TextField
               fullWidth
-              id="fullwidth"
+              id="outlined-required"
               label="Oil Change Mileage"
               type="number"
               onChange={(e) =>
-                setCar({ ...car.oilChange, mileage: e.target.value })
+                setCar({
+                  ...car,
+                  oilChange: { ...car.oilChange, mileage: e.target.value },
+                })
               }
               value={car.oilChange.mileage}
             />
@@ -157,24 +173,30 @@ export default function AddCar() {
           <div>
             <TextField
               fullWidth
-              id="fullwidth"
+              id="outlined-required"
               label="Filter Change Mileage"
               type="number"
               onChange={(e) =>
-                setCar({ ...car.filterChange, mileage: e.target.value })
+                setCar({
+                  ...car,
+                  filterChange: {
+                    ...car.filterChange,
+                    mileage: e.target.value,
+                  },
+                })
               }
               value={car.filterChange.mileage}
             />
             <DatePicker
               views={["year"]}
               label="Year"
+              value={car.filterChange.date}
               onChange={(newValue) => {
                 setCar({
                   ...car,
-                  oilChange: { ...car.filterChange, date: newValue },
+                  filterChange: { ...car.filterChange, date: newValue },
                 });
               }}
-              value={car.filterChange.date}
               renderInput={(params) => <TextField {...params} />}
             />
           </div>
@@ -188,11 +210,14 @@ export default function AddCar() {
           <div>
             <TextField
               fullWidth
-              id="fullwidth"
-              label="Tyre Change Mileage"
+              id="outlined-required"
+              label="Tire Change Mileage"
               type="number"
               onChange={(e) =>
-                setCar({ ...car.tireChange, mileage: e.target.value })
+                setCar({
+                  ...car,
+                  tireChange: { ...car.tireChange, mileage: e.target.value },
+                })
               }
               value={car.tireChange.mileage}
             />
@@ -203,7 +228,7 @@ export default function AddCar() {
               onChange={(newValue) => {
                 setCar({
                   ...car,
-                  oilChange: { ...car.oilChange, date: newValue },
+                  tireChange: { ...car.tireChange, date: newValue },
                 });
               }}
               renderInput={(params) => <TextField {...params} />}
@@ -219,11 +244,14 @@ export default function AddCar() {
           <div>
             <TextField
               fullWidth
-              id="fullwidth"
+              id="outlined-required"
               label="Last Refuel Mileage"
               type="number"
               onChange={(e) =>
-                setCar({ ...car.lastRefuel, mileage: e.target.value })
+                setCar({
+                  ...car,
+                  lastRefuel: { ...car.lastRefuel, mileage: e.target.value },
+                })
               }
               value={car.lastRefuel.mileage}
             />
@@ -237,7 +265,10 @@ export default function AddCar() {
                 ),
               }}
               onChange={(e) =>
-                setCar({ ...car.lastRefuel, amount: e.target.value })
+                setCar({
+                  ...car,
+                  lastRefuel: { ...car.lastRefuel, amount: e.target.value },
+                })
               }
               value={car.lastRefuel.amount}
             />

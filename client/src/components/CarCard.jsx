@@ -11,21 +11,38 @@ export default function CarCard(props) {
   let path = car.carImg.slice(8);
   const img = `http://localhost:3001/${path}`;
 
+  function handleEdit() {
+    props.handleEdit(car);
+  }
+
+  function handleDelete() {
+    props.handleDelete(car);
+  }
+
   return (
     <Card sx={{ maxWidth: 345 }}>
-      <CardMedia sx={{ height: 140 }} image={img} title="green iguana" />
+      <CardMedia sx={{ height: 140 }} image={img} title="" />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          Lizard
+          {car.make} {car.model}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
+          {car.year}
+
+          {car.mileage}
+
+          {car.oilChange.mileage}
+
+          {car.oilChange.date}
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
+        <Button size="small" onClick={handleEdit}>
+          Edit
+        </Button>
+        <Button size="small" onClick={handleDelete}>
+          Delete
+        </Button>
       </CardActions>
     </Card>
   );

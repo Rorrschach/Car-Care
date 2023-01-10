@@ -5,7 +5,7 @@ import { Container } from "@mui/material";
 import LogIn from "./pages/LogIn";
 import SignUp from "./pages/SignUp";
 import HomePage from "./pages/HomePage";
-import AddCar from "./components/AddCar";
+import AddCar from "./pages/AddCar";
 
 function App() {
   return (
