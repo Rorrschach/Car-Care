@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
-const validator = require("validator");
 const Car = require("../models/car");
 const protect = require("../middlewares/protect");
 const multer = require("multer");
