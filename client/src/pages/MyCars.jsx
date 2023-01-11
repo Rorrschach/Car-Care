@@ -26,6 +26,7 @@ function MyCars() {
   }, []);
 
   function handleEdit(car) {
+    console.log(car);
     navigate("/addCar", { state: car });
   }
 

@@ -5,6 +5,8 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
+import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 
 export default function CarCard(props) {
   const car = props.car;
@@ -31,16 +33,49 @@ export default function CarCard(props) {
           {car.make} {car.model}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Current Mileage: {car.mileage}
+          Current Mileage: {car.mileage}kms
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Oil Change due at: {oilChangeDue}
+          Oil Change due at: {oilChangeDue}kms
+          {car.mileage > oilChangeDue ? (
+            <>
+              <span style={{ color: "red" }}> Overdue</span>
+              <PriorityHighIcon color="error" />
+            </>
+          ) : oilChangeDue - car.mileage < 1000 ? (
+            <>
+              <span style={{ color: "orange" }}> Due Soon</span>
+              <ReportProblemIcon color="warning" />
+            </>
+          ) : null}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Tire Change due at: {tireChangeDue}
+          Tire Change due at: {tireChangeDue}kms
+          {car.mileage > tireChangeDue ? (
+            <>
+              <span style={{ color: "red" }}> Overdue</span>
+              <PriorityHighIcon color="error" />
+            </>
+          ) : tireChangeDue - car.mileage < 1000 ? (
+            <>
+              <span style={{ color: "orange" }}> Due Soon</span>
+              <ReportProblemIcon color="warning" />
+            </>
+          ) : null}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Filter Change due at: {filterChangeDue}
+          Filter Change due at: {filterChangeDue}kms
+          {car.mileage > filterChangeDue ? (
+            <>
+              <span style={{ color: "red" }}> Overdue</span>
+              <PriorityHighIcon color="error" />
+            </>
+          ) : filterChangeDue - car.mileage < 1000 ? (
+            <>
+              <span style={{ color: "orange" }}> Due Soon</span>
+              <ReportProblemIcon color="warning" />
+            </>
+          ) : null}
         </Typography>
       </CardContent>
       <CardActions>

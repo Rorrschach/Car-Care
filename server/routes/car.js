@@ -20,7 +20,8 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 router.get("/", async (req, res, next) => {
-  const cars = await Car.find();
+  const cars = await Car.find({ creator: req.user.id });
+
   res.status(200).json({
     message: "Cars fetched successfully",
     cars: cars,

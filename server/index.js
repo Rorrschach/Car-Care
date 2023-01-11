@@ -4,6 +4,10 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const app = express();
 const port = 3001;
+const cars = require("./test");
+const Cars = require("./models/car");
+
+// Cars.insertMany(cars);
 
 app.use(express.json());
 app.use(bodyParser.json());
